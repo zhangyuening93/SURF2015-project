@@ -1,0 +1,27 @@
+No counter. "full" = 2. specs for "full" controlled by strategy.
+
+"full" env_input in dispatcher. minimal partial transition and []<> on "full"
+
+# passenger = 2
+# req = 3
+# car = 2
+
+ready signal both included.
+
+dispatcher: 258 states
+strategy: 567 states
+both in gr1c.
+
+dispatcher: 378 states
+strategy: 1067 states
+both in jtlv.
+
+
+PS. there are two ways to write specifications in dispatcher.
+
+either: 
+req -> <> (car_0 || car_1)    (currently used)
+
+or:
+!car_0_full & !car_1_full & req -> car_0 && !car_1
+car_0_full & req -> car_1_full || car_1   (currently used)

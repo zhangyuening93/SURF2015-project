@@ -1,0 +1,16 @@
+"full" controlled by strategy. 
+"full" env_input in dispatcher.
+
+No counter. "full" = 1.
+
+# passenger = 1
+# req = 3
+# car = 4
+
+ready signal both included.
+
+dispatcher_3: ** states (just grow it to more cars.)
+strategy: 33 states
+both in gr1c
+
+specs for "full" both controlled by dispatcher and strategy. dispatcher_1,2. abandoned: until find a way such that the lower level can correctly provide car_0_success. Probably not worth it.

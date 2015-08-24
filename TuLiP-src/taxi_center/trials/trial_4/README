@@ -1,0 +1,16 @@
+"full" env_input by strategy. 
+"full" env_input in dispatcher.
+
+
+No Counter. "full" = counter_saturation.
+
+# passenger = 2.3..
+# req = 3
+# car = 2
+
+ready signal both included.
+
+dispatcher_3: 258 states
+strategy: 33 states
+both in gr1c
+

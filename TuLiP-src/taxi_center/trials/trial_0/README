@@ -1,0 +1,12 @@
+This is the files used for testing.
+
+No counter. "full" = 1. specs for "full" both controlled by dispatcher and strategy.
+
+# passenger = 1
+# req = 1
+
+ready signal both included.
+
+dispatcher: 37 states
+strategy: 21 states
+both in gr1c

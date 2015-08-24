@@ -1,0 +1,13 @@
+No counter. "full" = 2. specs for "full" controlled by strategy.
+
+"full" and "succeed" on env_input in dispatcher. partial transition between "full" and "succeed"
+
+# passenger = 2
+# req = 3
+# car = 2
+
+ready signal both included.
+
+dispatcher: 1900 states
+strategy: 567 states
+both in gr1c.
