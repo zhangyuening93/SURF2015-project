@@ -14,12 +14,12 @@ sys = transys.FTS()
 
 sys.states.add_from({'X0','X1','X2','X3','X4','X5'})
 sys.states.initial.add('X0')
-sys.transitions.add_comb({'X0'}, {'X0', 'X1', 'X2', 'X3', 'X4', 'X5'})
-sys.transitions.add_comb({'X1'}, {'X0', 'X1', 'X2', 'X3', 'X4', 'X5'})
-sys.transitions.add_comb({'X2'}, {'X0', 'X1', 'X2', 'X3', 'X4', 'X5'})
-sys.transitions.add_comb({'X3'}, {'X0', 'X1', 'X2', 'X3', 'X4', 'X5'})
-sys.transitions.add_comb({'X4'}, {'X0', 'X1', 'X2', 'X3', 'X4', 'X5'})
-sys.transitions.add_comb({'X5'}, {'X0', 'X1', 'X2', 'X3', 'X4', 'X5'})
+sys.transitions.add_comb({'X0'}, {'X1', 'X3'})
+sys.transitions.add_comb({'X1'}, {'X0', 'X4', 'X2'})
+sys.transitions.add_comb({'X2'}, {'X1', 'X5'})
+sys.transitions.add_comb({'X3'}, {'X0', 'X4'})
+sys.transitions.add_comb({'X4'}, {'X3', 'X1', 'X5'})
+sys.transitions.add_comb({'X5'}, {'X4', 'X2'})
 
 sys.atomic_propositions.add_from({'loc_0', 'loc_1', 'loc_2', 'loc_3', 'loc_4', 'des'})
 sys.states.add('X5', ap={'des'})
@@ -39,7 +39,6 @@ env_vars |= {'req_2'}
 #env_vars |= {'req_4'}
 
 env_init = {'!full'}
-#env_init = {}
 
 env_safe = {'(pick && loc_0 && req_0) -> X(!req_0)'}
 env_safe |= {'(!(pick && loc_0) && req_0) -> X(req_0)'}
