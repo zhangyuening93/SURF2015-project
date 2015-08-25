@@ -1,3 +1,13 @@
 2015 SURF project source code.
 Yuening Zhang
 zhangyn@umich.edu
+
+Simple taxi problem:
+Use TuLiP to generate strategic planner.
+Import the controller into matlab.
+Integrate with BluSTL program to run the simulation.
+
+Taxi center problem:
+Use TuLiP to generate strategic planner.
+Use BluSTL to generate navigational planner in real time of simulation.
+Use ROS for writing each controller as nodes that talk to each other.

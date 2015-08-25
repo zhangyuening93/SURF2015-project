@@ -1,0 +1,14 @@
+<launch>
+
+  <group ns="dispatcher_level">
+  
+    <node pkg="dispatcher_simple" name="TuLiPstrategy_server" type="TuLiPstrategy_server.py" output="screen" />
+    <node pkg="dispatcher_simple" name="dispatcher_wrapper" type="dispatcher_wrapper.py" output="screen" />
+  
+  </group>
+
+  <node pkg="dispatcher_simple" name="connector" type="connector.py" args="topic_from:=dispatcher_level/car_assignment topic_to:=strategy_level/car_assignment" output="screen" />
+
+  <node pkg="dispatcher_simple" name="request_processor" type="request_processor.py" args="requests:=dispatcher_level/requests location_assignment_0:=strategy_level/location_assignment_0 location_assignment_1:=strategy_level/location_assignment_1" output="screen" />
+
+</launch>

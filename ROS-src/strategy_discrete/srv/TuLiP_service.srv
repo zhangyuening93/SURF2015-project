@@ -1,0 +1,13 @@
+bool ready
+int8 req
+---
+int8 loc
+bool full
+int8 seat_0
+int8 seat_1
+int8 hold_0
+int8 hold_1
+bool temp_4
+bool temp_1
+bool temp_3
+bool temp_2

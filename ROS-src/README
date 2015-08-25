@@ -1,0 +1,7 @@
+This is the ROS packages that are used for taxi center problem.
+
+To use the packages:
+1. initialize a catkin_ws.
+2. put the packages in src folder.
+3. catkin_make the packages.
+4. launch the nodes using launch files.

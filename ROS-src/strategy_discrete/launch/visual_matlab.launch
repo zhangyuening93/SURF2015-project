@@ -1,0 +1,7 @@
+<launch>
+
+  <node pkg="strategy_discrete" name="difference_cal" type="difference_cal.py" />
+  
+  <node pkg="strategy_discrete" name="visualization" type="visual.py" />
+  
+</launch>

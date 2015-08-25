@@ -1,0 +1,2 @@
+bool ready
+bool from_location_assignment

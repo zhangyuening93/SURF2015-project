@@ -1,0 +1,11 @@
+bool req_1
+bool req_2
+bool req_3
+bool full_car_1
+bool full_car_0
+---
+bool temp2_1
+bool temp2_2
+bool temp2_0
+int8 car_0
+int8 car_1
