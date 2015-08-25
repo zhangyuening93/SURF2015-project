@@ -1,0 +1,8 @@
+This is the Matlab(BluSTL) code for taxi center problem.
+
+To use these files,
+1. Install Robotics System Toolbox.
+2. Install toolbox interface for ROS custom message.
+3. use rosgenmsg to generate the messages in ROS packages dispatcher_simple and strategy_discrete.
+4. get a roscore running first then use rosinit("xxx.xxx.xxx.xxx") to initialize matlab node.
+5. initialize a Navigation_3 and Navigation_4 in two matlab terminals.

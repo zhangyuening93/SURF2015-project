@@ -1,0 +1,3 @@
+These files are used before dynamical obstacle avoidance.
+
+The STLC_lti is still value class, not handle class.
