@@ -1,11 +1,10 @@
 from tulip import spec, synth, transys
 import dumpsmach
+# import tomatlab
 
-import logging
-logging.basicConfig(filename='s_d.log',level=logging.DEBUG, filemode='w')
-logger = logging.getLogger(__name__)
-
-
+# import logging
+# logging.basicConfig(filename='s_d.log',level=logging.DEBUG, filemode='w')
+# logger = logging.getLogger(__name__)
 
 def spec_gen(num_req, num_taxi):
     env_vars = set()
@@ -126,8 +125,10 @@ specs = spec_gen(3, 2)
 
 ctrl = synth.synthesize('gr1c', specs)
 
-ctrl.states.current = ['Sinit']
-ctrl.simulate(inputs_sequence='manual', iterations=50)
+# ctrl.states.current = ['Sinit']
+# ctrl.simulate(inputs_sequence='manual', iterations=50)
 
-# dumpsmach.write_python_case("TuLiPstrategy.py", ctrl,classname="strategy")
-# dumpsmach.write_ROS_srv("TuLiP_service.srv", ctrl)
+# dumpsmach.write_python_case("dispatcher_class.py", ctrl,classname="dispatcher")
+# dumpsmach.write_ROS_srv("dispatcher_srv.srv", ctrl)
+
+# tomatlab.write_matlab_case('dispatcher.m', ctrl, classname="dispatcher")

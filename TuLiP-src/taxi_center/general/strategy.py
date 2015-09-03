@@ -1,9 +1,10 @@
 from tulip import spec, synth, transys
 import dumpsmach
+# import tomatlab
 
-import logging
-logging.basicConfig(filename='s_d.log',level=logging.DEBUG, filemode='w')
-logger = logging.getLogger(__name__)
+# import logging
+# logging.basicConfig(filename='s_d.log',level=logging.DEBUG, filemode='w')
+# logger = logging.getLogger(__name__)
 
 def spec_gen(num_req, num_pas):
     env_vars = set()
@@ -155,6 +156,8 @@ def spec_gen(num_req, num_pas):
     for n in range(num_req):
         sys_safe.add('loc_'+str(n)+' -> X(!ready -> loc_'+str(n)+')')
 
+    sys_safe.add('des -> X(!ready -> des)')
+
     # Change in report
     for l in range(num_pas):
         for n in range(num_req):
@@ -260,6 +263,8 @@ def spec_gen(num_req, num_pas):
             else:
                 all_seat_zero += ' && !seat_'+str(l)+'_'+str(n)
     sys_safe.add('X(temp) <-> (('+all_seat_zero+' && temp) || des)')
+    sys_prog.add('temp')
+    sys_init.add('temp')
 
     specs = spec.GRSpec(env_vars, sys_vars, env_init, sys_init,
                    env_safe, sys_safe, env_prog, sys_prog)
@@ -270,9 +275,11 @@ specs = spec_gen(3, 2)
 ctrl = synth.synthesize('gr1c', specs)
 
 # either select current state before simulation
-ctrl.states.current = ['Sinit']
-ctrl.simulate(inputs_sequence='manual', iterations=50)
+# ctrl.states.current = ['Sinit']
+# ctrl.simulate(inputs_sequence='manual', iterations=50)
 
 
-# dumpsmach.write_python_case("TuLiPstrategy.py", ctrl,classname="strategy")
-# dumpsmach.write_ROS_srv("TuLiP_service.srv", ctrl)
+# dumpsmach.write_python_case("strategy_class.py", ctrl,classname="strategy")
+# dumpsmach.write_ROS_srv("strategy_srv.srv", ctrl)
+
+# tomatlab.write_matlab_case('strategy.m', ctrl, classname="strategy")
