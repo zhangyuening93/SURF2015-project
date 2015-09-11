@@ -1,3 +1,7 @@
+# The detailed specs for dispatcher can be found in the report.
+# Otherwise, see the dispatcher.py in src folder which uses the same specs.
+# Or, uncomment the logger and check the generated specs in s_d.log
+
 from tulip import spec, synth, transys
 import dumpsmach
 # import tomatlab

@@ -1,3 +1,12 @@
+# The detailed specifications written in this file can be found in the report.
+# Otherwise, the strategy_discrete.py in src folder also uses similar specs.
+# Or, uncomment the logger, the generated specs will be displayed in the file s_d.log
+
+# Results show that if you give locations in the order of 3,2 or 2,1 or 3,1 it can pick up
+# both and then go to destination, but if reverse order, it will pick up and drop off
+# one at a time. Also, there must as least be an input !ready once immediately after 
+# every pick up, otherwise, it will go back to a fixed location for no reason.
+
 from tulip import spec, synth, transys
 import dumpsmach
 # import tomatlab
@@ -55,6 +64,21 @@ def spec_gen(num_req, num_pas):
             env_safe.add('req_'+str(n)+' -> '+ all_req_zero)
 
     # Add sys specification
+
+    # @ For our special example, we add a bridge to connect locations and the destination. @
+    # TODO: Currently, if you give locations in the order of 3,2 or 2,1 or 3,1 it can pick up
+    #       both and then go to destination, but if reverse order, it will pick up and drop off
+    #       one at a time. I think if more intermediate locations like bridge are added, in 
+    #       theory the taxi should pick up more passengers then go to des?
+    sys_vars.add('bridge')
+    sys_safe |= {'bridge -> X(!ready -> bridge)'}
+    sys_safe |= {'loc_0 -> X(ready -> loc_0 || loc_1 || loc_2 || bridge)'}
+    sys_safe |= {'loc_1 -> X(ready -> loc_0 || loc_1 || loc_2 || bridge)'}
+    sys_safe |= {'loc_2 -> X(ready -> loc_0 || loc_1 || loc_2 || bridge)'}
+    sys_safe |= {'bridge -> X(ready -> loc_0 || loc_1 || loc_2 || bridge || des)'}
+    sys_safe |= {'des -> X(ready -> bridge || des)'}
+    # @ End: For our special example, we add a bridge to connect locations and the destination. @
+
     full_def = ''
     for l in range(num_pas):
         at_least_wait = ''
@@ -76,7 +100,6 @@ def spec_gen(num_req, num_pas):
             full_def += ' && ('+ at_least_one + ')'
     sys_safe.add('full <-> ('+ full_def+')')
 
-    # Change report
     if num_req > 1:
         for n in range(num_req):
             all_req_zero = ''
@@ -88,7 +111,7 @@ def spec_gen(num_req, num_pas):
                         all_req_zero += '!loc_'+str(k)
                     else: 
                         all_req_zero += ' && !loc_'+str(k)
-            all_req_zero += '&& !des'
+            all_req_zero += '&& !des && !bridge' # For special cases
             sys_safe.add('loc_'+str(n)+' -> '+ all_req_zero)
 
     all_req_zero = ''
@@ -97,18 +120,18 @@ def spec_gen(num_req, num_pas):
             all_req_zero += '!loc_'+str(n)
         else:
             all_req_zero += ' && !loc_'+str(n)
-    sys_safe.add('des -> '+ all_req_zero)
-    
+    sys_safe.add('des -> '+ all_req_zero + ' && !bridge') # For special cases
+    sys_safe.add('bridge -> ' + all_req_zero + ' && !des') # For special cases
+
     at_least_req = ''
     for n in range(num_req):
         if n == 0:
            at_least_req += 'loc_'+str(n)
         else:
            at_least_req += ' || loc_'+str(n)
-    at_least_req += ' || des'
+    at_least_req += ' || des || bridge' # For special cases
     sys_safe.add(at_least_req)
 
-    # Change in report
     if num_req > 1:
         for l in range(num_pas):
             for n in range(num_req):
@@ -158,14 +181,12 @@ def spec_gen(num_req, num_pas):
 
     sys_safe.add('des -> X(!ready -> des)')
 
-    # Change in report
     for l in range(num_pas):
         for n in range(num_req):
             sys_init.add('!seat_'+str(l)+'_'+str(n))
 
     sys_init.add('des')
 
-    # Change in report
     for n in range(num_req):
         for l in range(num_pas):
             sys_vars.add('last_wait_'+str(l)+'_'+str(n))

@@ -1,2 +1,3 @@
-src is the currently used version (using the trial_2 version.)
-trials are trial versions used for performance estimation with different ways to setup the structures.
+1. general folder contains the final code which can be generalized to self-defined multiple taxis, requests, and maximum passengers in taxi.
+2. src folder is the first used version (using the trial_2 version in trials folder), which is for the special case of 3 requests, 2 taxis and 2 being full.
+3. trials are trial versions used for performance estimation with different ways to setup the structures. It is also using the special case of 3 requests, 2 taxis and 2 being full.

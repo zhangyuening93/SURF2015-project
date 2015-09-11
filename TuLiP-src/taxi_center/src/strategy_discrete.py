@@ -9,18 +9,22 @@ from tulip.abstract import prop2part, discretize
 import dumpsmach
 
 # import logging
-# logging.basicConfig(filename='s_d_2.log',level=logging.DEBUG, filemode='w')
+# logging.basicConfig(filename='s_d.log',level=logging.DEBUG, filemode='w')
 # logger = logging.getLogger(__name__)
 
 # @env_specs_section@
 env_vars = {}
 env_vars["req"] = (0, 3)
-env_init = {'req=0'}
+env_init = {'req=0'} # Not necessary and is deleted in general spec.
+# env_init = {}
 
 env_vars["ready"] = 'boolean'
-env_init |= {'ready'}
+env_init |= {'ready'} # Not necessary and is deleted in general spec.
 
 env_safe = {'full -> X(req=0)'}
+
+# The following spec reflects how the input actually behave due to the implementation in ROS.
+# env_safe |= {'ready -> req=0'}
 
 env_prog = {'ready'}
 # @env_specs_section_end@
@@ -48,11 +52,12 @@ sys_safe |= {'loc=2 -> X( !ready -> loc=2 )'}
 sys_safe |= {'loc=3 -> X( !ready -> loc=3 )'}
 sys_safe |= {'loc=4 -> X( !ready -> loc=4 )'}
 
-sys_init |= {'seat_0=0'}
+sys_init |= {'seat_0=0'} # Not necessary and is deleted in general spec.
 sys_init |= {'hold_0=0'}
-sys_init |= {'seat_1=0'}
+sys_init |= {'seat_1=0'} # Not necessary and is deleted in general spec.
 sys_init |= {'hold_1=0'}
 
+# @ These specs will work for the special case of 2 taxis, and are too complicated to generalize @
 # This is to give preference and make sure they won't go true at the same time
 sys_safe |= {'(seat_0=0 && seat_1=0 && hold_0=0 && hold_1=0) -> X(req=1 -> (seat_0=1 && seat_1=0))'}
 sys_safe |= {'(seat_0=0 && seat_1=0 && hold_0=0 && hold_1=0) -> X(req=2 -> (seat_0=2 && seat_1=0))'}
@@ -67,6 +72,37 @@ sys_safe |= {'(seat_0=3 || seat_1=3) -> X(req=3 -> ((seat_0=3 || hold_0=3) && (s
 sys_safe |= {'req=1 -> (seat_0=1 || seat_1=1)'}
 sys_safe |= {'req=2 -> (seat_0=2 || seat_1=2)'}
 sys_safe |= {'req=3 -> (seat_0=3 || seat_1=3)'}
+# @ End: These specs will work for the special case of 2 taxis, and are too complicated to generalize @
+
+# The following code is how the spec is written in general case.
+# It results in different behavior of the controller and this one
+# is actually worse in performance for our purpose.
+# sys_vars["last_seat_0"] = (0, 3)
+# sys_vars["last_seat_1"] = (0, 3)
+
+# sys_init |= {'last_seat_0=0'}
+# sys_init |= {'last_seat_1=0'}
+
+# sys_safe |= {'(X(last_seat_0=0) <-> seat_0=0)'}
+# sys_safe |= {'(X(last_seat_0=1) <-> seat_0=1)'}
+# sys_safe |= {'(X(last_seat_0=2) <-> seat_0=2)'}
+# sys_safe |= {'(X(last_seat_0=3) <-> seat_0=3)'}
+
+# sys_safe |= {'(X(last_seat_1=0) <-> seat_1=0)'}
+# sys_safe |= {'(X(last_seat_1=1) <-> seat_1=1)'}
+# sys_safe |= {'(X(last_seat_1=2) <-> seat_1=2)'}
+# sys_safe |= {'(X(last_seat_1=3) <-> seat_1=3)'}
+
+# sys_safe |= {'(req=1 -> ((last_seat_0=0 && seat_0=1) || (last_seat_1=0 && seat_1=1)))'}
+# sys_safe |= {'(req=2 -> ((last_seat_0=0 && seat_0=2) || (last_seat_1=0 && seat_1=2)))'}
+# sys_safe |= {'(req=3 -> ((last_seat_0=0 && seat_0=3) || (last_seat_1=0 && seat_1=3)))'}
+
+# sys_safe |= {'((last_seat_0=0 && seat_0=1) -> (last_seat_1=0 -> seat_1=0))'}
+# sys_safe |= {'((last_seat_0=0 && seat_0=2) -> (last_seat_1=0 -> seat_1=0))'}
+# sys_safe |= {'((last_seat_0=0 && seat_0=3) -> (last_seat_1=0 -> seat_1=0))'}
+# sys_safe |= {'((last_seat_1=0 && seat_1=1) -> (last_seat_0=0 -> seat_0=0))'}
+# sys_safe |= {'((last_seat_1=0 && seat_1=2) -> (last_seat_0=0 -> seat_0=0))'}
+# sys_safe |= {'((last_seat_1=0 && seat_1=3) -> (last_seat_0=0 -> seat_0=0))'}
 
 # This is to specify the transition relations.
 sys_safe |= {'seat_0=1 -> X(!loc=0 -> seat_0=1)'}
@@ -136,8 +172,8 @@ specs = spec.GRSpec(env_vars, sys_vars, env_init, sys_init,
 
 ctrl = synth.synthesize('gr1c', specs)
 
-dumpsmach.write_python_case("TuLiPstrategy.py", ctrl,classname="strategy")
-dumpsmach.write_ROS_srv("TuLiP_service.srv", ctrl)
+# dumpsmach.write_python_case("TuLiPstrategy.py", ctrl,classname="strategy")
+# dumpsmach.write_ROS_srv("TuLiP_service.srv", ctrl)
 
 # write_matlab_case("strategy_discrete_3.m", ctrl, classname="strategy_discrete_3")
 
