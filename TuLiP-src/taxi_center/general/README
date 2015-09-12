@@ -1,3 +1,3 @@
 This is the generalized version that can synthesize controllers for any user-defined number of taxis, requests and maximum passengers on taxi (being full), as long as the computing power allows it.
 
-This generalized spec for strategy gives a solution to the special case (3 requests, 2 taxi, 2 being full) that is less optimal than the one in src folder. The results are further explained in the file.
+This generalized spec for strategy gives a solution to the special case (3 requests, 2 taxi, 2 being full, and a bridge) that is less optimal than the one in src folder. The results are further explained in the file.

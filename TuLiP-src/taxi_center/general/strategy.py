@@ -69,7 +69,9 @@ def spec_gen(num_req, num_pas):
     # TODO: Currently, if you give locations in the order of 3,2 or 2,1 or 3,1 it can pick up
     #       both and then go to destination, but if reverse order, it will pick up and drop off
     #       one at a time. I think if more intermediate locations like bridge are added, in 
-    #       theory the taxi should pick up more passengers then go to des?
+    #       theory the taxi should pick up more passengers then go to des? Besides, haveing bridge
+    #       also ensures that a taxi will not take another 2 new requests when a passenger is 
+    #       already in the taxi, since without bridge, the location then would have been des already.
     sys_vars.add('bridge')
     sys_safe |= {'bridge -> X(!ready -> bridge)'}
     sys_safe |= {'loc_0 -> X(ready -> loc_0 || loc_1 || loc_2 || bridge)'}
