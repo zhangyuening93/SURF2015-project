@@ -1,0 +1,10 @@
+
+<launch>
+
+  <node pkg="taxi_center" name="dispatcher_server" type="dispatcher_server.py" output="screen" />
+  
+  <node pkg="taxi_center" name="dispatcher" type="dispatcher_wrapper.py" output="screen" />
+  
+  <node pkg="taxi_center" name="request_processor" type="request_processor.py" output="screen" />
+
+</launch>

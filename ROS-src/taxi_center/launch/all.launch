@@ -1,0 +1,25 @@
+<launch>
+
+  <node pkg="taxi_center" name="dispatcher_server" type="dispatcher_server.py" />
+  
+  <node pkg="taxi_center" name="strategy_server_0" type="strategy_server.py" args="strategy_service:=strategy_service_0" />
+  
+  <node pkg="taxi_center" name="strategy_server_1" type="strategy_server.py" args="strategy_service:=strategy_service_1" />
+  
+  <node pkg="taxi_center" name="dispatcher" type="dispatcher_wrapper.py" />
+  
+  <node pkg="taxi_center" name="strategy_0" type="strategy_wrapper.py" args="status_full:=status_full_0 location_assignment:=location_assignment_0 taxi_assignment:=taxi_assignment_0 BluSTL_signal:=BluSTL_signal_0 Taxi:=Taxi_0 strategy_service:=strategy_service_0" />
+  
+  <node pkg="taxi_center" name="strategy_1" type="strategy_wrapper.py" args="status_full:=status_full_1 location_assignment:=location_assignment_1 taxi_assignment:=taxi_assignment_1 BluSTL_signal:=BluSTL_signal_1 Taxi:=Taxi_1 strategy_service:=strategy_service_1" />
+  
+  <node pkg="taxi_center" name="request_processor" type="request_processor.py" />
+  
+  <node pkg="taxi_center" name="BluSTL_interface_0" type="BluSTL_interface.py" args="BluSTL_signal:=BluSTL_signal_0 Matlab_input:=Matlab_input_0 location_assignment:=location_assignment_0 Matlab_output:=Matlab_output_0" output="screen" />
+  
+  <node pkg="taxi_center" name="BluSTL_interface_1" type="BluSTL_interface.py" args="BluSTL_signal:=BluSTL_signal_1 Matlab_input:=Matlab_input_1 location_assignment:=location_assignment_1 Matlab_output:=Matlab_output_1" output="screen" />
+  
+  <node pkg="taxi_center" name="visual" type="visual.py" />
+  
+  <node pkg="taxi_center" name="difference_cal" type="difference_cal.py" output="screen" />
+
+</launch>

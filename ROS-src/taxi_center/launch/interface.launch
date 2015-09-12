@@ -1,0 +1,11 @@
+<launch>
+  
+  <node pkg="taxi_center" name="BluSTL_interface_0" type="BluSTL_interface.py" args="BluSTL_signal:=BluSTL_signal_0 Matlab_input:=Matlab_input_0 location_assignment:=location_assignment_0 Matlab_output:=Matlab_output_0" output="screen" />
+  
+  <node pkg="taxi_center" name="BluSTL_interface_1" type="BluSTL_interface.py" args="BluSTL_signal:=BluSTL_signal_1 Matlab_input:=Matlab_input_1 location_assignment:=location_assignment_1 Matlab_output:=Matlab_output_1" output="screen" />
+
+  <node pkg="taxi_center" name="visual" type="visual.py" />
+  
+  <node pkg="taxi_center" name="difference_cal" type="difference_cal.py" output="screen" />
+
+</launch>

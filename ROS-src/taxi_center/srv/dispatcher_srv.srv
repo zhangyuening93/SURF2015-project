@@ -1,0 +1,15 @@
+bool req_0
+bool req_1
+bool req_2
+bool full_0
+bool full_1
+---
+bool taxi_1_1
+bool taxi_1_0
+bool taxi_1_2
+bool taxi_0_0
+bool taxi_0_1
+bool taxi_0_2
+bool temp_1
+bool temp_0
+bool temp_2
