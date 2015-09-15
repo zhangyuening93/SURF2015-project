@@ -354,8 +354,8 @@ To make sure one and only one passenger seat is given to each request, we specif
 $$ \bigwedge_n \square\left( \bigcirc request_i \Rightarrow \bigvee_l \left( \lnot wait_{k,i}\wedge \bigcirc wait_{k,i}\right) \right) $$
 \begin{equation*}
 \begin{split}
-& \bigwedge_n \bigwedge_l \square \Bigg{\left(} \lnot wait_{k,i} \wedge \bigcirc wait_{k,i} \Rightarrow \right.\\
-& \left. \qquad \qquad \qquad \bigwedge_{l\text{ except }k}\left(  \lnot wait_{k,i} \Rightarrow \bigcirc \lnot wait_{k,i}\right)\right \Bigg)
+& \bigwedge_n \bigwedge_l \square \left( \lnot wait_{k,i} \wedge \bigcirc wait_{k,i} \Rightarrow \right.\\
+& \left.\qquad \qquad \qquad \bigwedge_{l\text{ except }k} \left(  \lnot wait_{k,i} \Rightarrow \bigcirc \lnot wait_{k,i}\right)\right)
 \end{split}
 \end{equation*}
 
@@ -413,35 +413,35 @@ In adversarial setup, we can specify the disturbance signal to stay within certa
 
 \paragraph*{\textbf{System specifications}}
 We first specify that the taxi does not exceed an environment boundary, written in STL specification,
-\begin{equation*}
-\begin{align}
- &\square_{[0, \text{Inf}]} \left( x(t) > x_{\text{min}}(t) \wedge x(t) < x_{\text{max}}(t) \wedge \right.\\ 
- & \left. \qquad \qquad \qquad \qquad \qquad y(t) > y_{\text{min}}(t)  \wedge y(t) < y_{\text{max}}(t)\right)
- \end{aligh}
-\end{equation*}
+\[
+\begin{array}{l}
+\square_{[0, \text{Inf}]} \left( x(t) > x_{\text{min}}(t) \wedge x(t) < x_{\text{max}}(t) \wedge \right.\\ 
+\left. \qquad \qquad \qquad \qquad \qquad y(t) > y_{\text{min}}(t)  \wedge y(t) < y_{\text{max}}(t)\right)
+\end{array}
+\]
 
 
 Then, we specify avoiding the static obstacles for safety requirement,
-$$
+
 \begin{align}
 &\square_{[0, \text{Inf}]} \left( x(t) < x_{\text{min}}(t)  \vee x(t) > x_{\text{max}}(t)\vee \right. \\
 & \left. \qquad \qquad \qquad \qquad \qquad y(t) <y_{\text{min}}(t)  \vee y(t) > y_{\text{max}}(t)\right)
 \end{align}
-$$
+
 
 To satisfy the realizability requirement, when the target location is $location_i$ or $des$, we have
-$$
+
 \begin{align}
 & \square_{[0, \text{Inf}]} \lozenge_{[0, t_0]} \left( x(t) > x_{\text{min}}(t) \wedge x(t) < x_{\text{max}}(t) \right.\\
 & \qquad \qquad \qquad \qquad \qquad\left. \wedge y(t) > y_{\text{min}}(t) \wedge y(t) < y_{\text{max}}(t)\right)
-\end{align}$$
+\end{align}
 
 In the end, in order to avoid taxis crashing into each other, we use a buffer value $e$ that is slightly greater than the radius of the vehicle, and specify that 
-$$
+
 \begin{align}
-& \square_{[0, \text{Inf}]} (close(t)>0.5 \Rightarrow x(t)<xpos(t)-e \vee x(t)> \right.\\
-& \left. xpos(t)+e \vee y(t)<ypos(t)-e \vee y(t)>ypos(t)+e)
- \end{align} $$
+& \square_{[0, \text{Inf}]} (close(t)>0.5 \Rightarrow x(t)<xpos(t)-e \vee x(t)> \\
+& xpos(t)+e \vee y(t)<ypos(t)-e \vee y(t)>ypos(t)+e)
+\end{align} 
 
 \subsection{Communication Platform}
 After synthesizing controllers for all components, the controllers need to be connected. The contracts have specified the ports for different controllers, and during implementation, there are two major problems to be considered: which communication platform can host the communication between the components, and how to control the synchronous or asynchronous communication between the components.
