@@ -31,7 +31,7 @@ A Contract-based Approach to Designing an Autonomous Taxi System
 
 
 \author{Yuening Zhang, Vasumathi Raman, Samira Farahani and Richard Murray % <-this % stops a space
-%\thanks{*This work was not supported by any organization}% <-this % stops a space
+\thanks{*This work was supported in part by TerraSwarm, one of six centers of STARnet, a Semiconductor Research Corporation program sponsored by MARCO and DARPA.}% <-this % stops a space
 %\thanks{$^{1}$Albert Author is with Faculty of Electrical Engineering, Mathematics and Computer Science,
 %        University of Twente, 7500 AE Enschede, The Netherlands
 %        {\tt\small albert.author@papercept.net}}%
@@ -53,7 +53,7 @@ A Contract-based Approach to Designing an Autonomous Taxi System
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
 
-Contract-based methodology emphasizes decomposing a complex problem into more manageable sub-problems by using contracts to define assume-guarantee relationships between the components in a system. Contract-based approaches have been proven successful in several applications such as aircraft electric power system and automotive applications. However, there has not yet been a generalized contract-based design framework for robotic problems. In this paper, a control system for an autonomous taxi center is designed and we propose a contract-based platform architecture for the design structure of this system. This structure enables independent implementation of system topology (i.e. interconnection among elements) and control protocol by using a contract-based approach. The architecture includes a centralized top-level dispatcher, middle-level route planner and a low-level navigation planner and the specifications are expressed using the formalisms of linear and signal temporal logic. We synthesize controllers for each platform and the platforms are interconnected to transfer necessary information among each other, while obeying their assume-guarantee contracts. The simulation results show the effectiveness of contract-based method in promoting problem segregation and supporting platform-based architecture.
+Contract-based methodology emphasizes decomposing a complex problem into more manageable sub-problems by using contracts to define assume-guarantee relationships between the components of a system. Contract-based approaches have proved successful in several domains such as aircraft electric power system design and automotive applications. However, there has not yet been a generalized contract-based design framework for robotics problems. In this paper, we propose a contract-based, platform architecture for designing the control system of an autonomous taxi center. This design structure enables independent implementation of system topology (i.e. interconnection among elements) and control protocols. The architecture includes a centralized top-level dispatcher, middle-level route planner and a low-level navigation planner, and the component specifications are expressed using the formalisms of linear and signal temporal logic. We automatically synthesize controllers for each platform, while ensuring that the platforms are sufficiently interconnected to transfer necessary information to each other while obeying their assume-guarantee contracts. Our simulation results demonstrate the effectiveness of a contract-based methodology in promoting sub-problem segregation and enabling a platform-based architecture.
 
 \end{abstract}
 
@@ -63,47 +63,45 @@ Contract-based methodology emphasizes decomposing a complex problem into more ma
 
 % Introduce the background and motivation for doing this project.
 % What are the current progress in this respect.
+In recent years, increasing interest in the field of robotics and automaton has led researchers and practitioners alike to develop robotic systems that perform many complicated tasks $\cite{c1,c2}$. The control systems for these applications are usually designed using the state-of-art methods by groups of expert researchers. As the control systems become more complex, system design necessarily focuses more on having a decomposed design structure. The reasons for this are manifold. It can be hard for a single group of designers to design a controller that encompasses all aspects of the problem. More often, a large project requires collaboration of several teams in charge of different aspects and sub-problems. It is also useful to limit the influence of a mistake within a local controller, or even to have a correct-by-construction system. Other factors include the limitations of existing automatic control synthesis tools, including their vulnerability to combinatorial explosion and the limited types of dynamic models and formal specifications they support: this forces system designers to divide the problem to fit the applicable range of different tools. Some decomposed design structures that have been explored include layered design, component-based design, V-model design and model-based design$\cite{c3}$.
 
-In recent years, there is increasing interest in the field of robotics and automaton. Researchers have developed robotic applications that fulfill many complicated tasks $\cite{c1,c2}$, and the control systems of those applications are designed using the state-of-art methods by groups of expert researchers. As the control systems become more complex, system design focuses more on having a decomposed design structure. The reasons are manifold: It can be hard for a group of designers to design a controller that encompasses all aspects of the problem. More often, a large project requires collaboration of several teams in charge of different aspects of the problems. It is useful to limit the influence of a mistake within the local controller, or even to have a correct-by-construction system. Furthermore, the limitations of the existing automatic synthesis tools, including their vulnerability to combinatorial explosion and the limited types of models and specifications they allow,  force the designers to divide the problems to fit the applicable range of different tools. Some decomposed design structures that are explored include layered design, component-based design, V-model design and model-based design$\cite{c3}$.
+In this paper, we propose contract-based design for autonomous robotic systems. Contract-based methodology can facilitate the design of complex and distributed cyber-physical systems by formally defining the interconnections between the components. It can potentially reduce the cost of re-design, thus shortening the development cycle, and promote re-use and optimization of functionalities.  Among the different interpretations of contracts, a comparatively recent and active one is that of contract theory based on assume-guarantee relationships. Contract-based design has been applied to various cyber-physical systems $\cite{c4}$, as well as in the design of aircraft electric power systems $\cite{c5}$. Combined with platform-based design $\cite{c6}$, which provides a design methodology for decomposing the system, contract-based design has attracted a lot of attention because of its successful application in many embedded system domains, including automotive $\cite{c14}$ and integrated circuit $\cite{c15}$ domains.  
 
-In this paper, we propose contract-based design for autonomous robotic system. Contract-based methodology can facilitate the design of complex or distributed cyber-physical systems by defining the interconnection of the components. It can potentially reduce the cost for re-design, thus shortening the development cycle, and promote re-use and optimization of functionalities.  Among the different interpretations of contracts, a more recent and active one is the contract theory based on assume-guarantee relationships. Contract-based design has been applied to cyber physical systems $\cite{c4}$ as well as in the design of aircraft electric power system $\cite{c5}$. Combined with platform-based design $\cite{c6}$, which is a design methodology for decomposing the system, contract-based design has attracted a lot of attention because of its successful application in many embedded system domains, including automotives $\cite{c14}$ and integrated circuit $\cite{c15}$.  
-
-However, there has not yet been a generalized contract-based design framework for many robotics problems and the state-of-the-art robotics design today are mostly specialized for the problems. In this paper, we use the contract-based design method to design an autonomous taxi system in an effort to establish a contract-based framework to be used in distributed autonomous vehicle systems. We follow the platform-based paradigm to decompose the system and use contracts to define the legal composition of the different components of the system. We try to use existing computational tools and communication platforms to implement a problem, in order to promote utilizing the pre-existing modules in system design to ease design difficulties of robotics problems.
+However, there has not yet been a generalized contract-based design framework for robotics problems, and the state-of-the-art of robotic system design today is mostly specialized to the problems. In this paper, we use the contract-based design method to design an autonomous taxi system in an effort to establish a contract-based framework to be used in distributed autonomous vehicle systems. We follow the platform-based paradigm to decompose the system and use contracts to define the legal composition of the different components of the system. We exploit existing computational tools and communication platforms to implement each platform, demonstrating the ability to reuse pre-existing modules for robotic system design.
+%in order to promote utilizing the pre-existing modules in system design to ease design difficulties of robotics problems.
 
 %The remainder of the paper is organized as follows: Section II describes the autonomous taxi problem, Section III provides context for contract-based design and platform-based design, Section IV describes the design flow for designing the autonomous taxi system, Section V describes system topology design, Section VI describes system controller design, Section VII demonstrates the result of the solution, and in the end, Section VIII concludes the paper.
 
 
 \section{Autonomous Taxi System}
 %The problem in motion planning.
-We look at the problem of designing an autonumous taxi system. The applications of similar systems can include  hotel shuttle services. 
+We address the problem of designing an autonomous taxi system, such as might be deployed for a parking lot or hotel shuttle service. 
 
 \subsection{Problem Formulation}
 % How the problem is formulated.
+Consider a taxi center in charge of transporting passengers. The taxi center has multiple taxis that can be assigned different ride requests. Each taxi needs to pick up the assigned passengers at the requested locations and drop them off at the destination. Each request corresponds to a specific location for pick up. In our examples, all passengers will eventually go to the same destination to simplify the problem for illustrative purposes, but there is no conceptual barrier to extending this to per-passenger destinations. Each taxi can accommodate multiple passengers up to its capacity constraint. 
 
-A taxi center is in charge of carrying passengers. The taxi center has multiple taxis that can be assigned to different requests. Each taxi needs to pick up the assigned passengers at the requested locations and drop them off at the destination. Each request corresponds to a specific location for pick up. In our examples, all passengers will eventually go to the same destination for simplicity of the problem, but there is no conceptual barrier to extending this to different destinations. Each taxi can take more than one passengers at a time until it reaches its capacity constraint. 
-
-\subsection{System Requirements}
+\subsection{System Requirements}\label{sec:reqs}
 % What are the detailed system requirements such as safety, goals, strategy etc.
-
-Given the requests from the passengers, the goal of the autonomous taxi system is to accommodate those requests, i.e. assign taxis to pick up the passengers and send them to the designated destination. While designing the system, the following requirements should be considered.
+Given requests from the passengers, the goal of the autonomous taxi system is to accommodate those requests, i.e. assign taxis to pick up the passengers and send them to the designated destination. While designing the system, the following requirements should be considered.
 
 \subsubsection{Service}
 
-Service specifications specify that under all possible requests that are allowed, the taxi center should eventually serve those requests.
+Under all possible requests that are allowed, the taxi center should eventually serve those requests.
 
 \subsubsection{Optimality}
 
-Optimality specifications specify that the system should pick the optimal solution among all the solutions that satisfy the service requirements. For example, the center should use the least number of taxis possible, or should assign the closest taxi to the pick-up location, or the taxi should take the shortest path to save fuel.
+The system should choose the optimal solution among all solutions that satisfy the service requirements. For example, the center should use the least number of taxis possible, or should assign the closest taxi to the pick-up location, or the taxi should take the shortest path to save fuel.
 
 \subsubsection{Safety}
-Safety specifications specify that the taxis should avoid obstacles in the path and the multiple taxis should not crash into each other.
+
+The taxis should avoid obstacles in the path, and also not crash into each other.
 
 
 \section{Contract-based Design Methodology}
 % Introduce contract-based design
-A contract, used in the context of decomposed design structures, specifies the assume-guarantee composition of a component of the system. The set of contracts restrict the legal composition of different components of a system.  The essence of contract-based method is therefore based on decomposing a complex problem into more manageable sub-problems while making sure that the solutions can be merged. Contract-based design allows setting up the design structure at an early stage, and the design can then progress through each component smoothly. A generic use is to merge contract-based design with platform-based design, which supports a decomposed design structure that combines both component-based design and layered design.
-
-Platform-based design provides a meet-in-the-middle process where top-down refinements of the specifications are mapped onto bottom-up implementations of the behavior $\cite{c6}$. A platform is an abstraction layer with a library of components to be utilized, which includes computational blocks to carry out computation and give performance estimation of the platform abstraction, and communication components to ensure the correct interconnections of the platforms and provide interface to these sub-systems. 
+A \emph{contract}, used in the context of decomposed design structures, specifies the assume-guarantee relationship between components of the system: the set of contracts restrict the legal composition of different components.  The essence of the contract-based method lies in decomposing a complex problem into more manageable sub-problems while making sure that the solutions can be merged. Contract-based design allows setting up the decomposed design structure at an early stage, and the design flow can then progress deeper through each component. A common approach is to merge contract-based design with platform-based design.%, which in turn combines component-based design with \emph{layered} design.
+Platform-based design provides a meet-in-the-middle process, where top-down refinements of the high-level specifications are mapped onto bottom-up, concrete implementations of the behavior $\cite{c6}$. A \emph{platform} is an abstraction layer associated with a library of \emph{computational components}, which form the building blocks that provide performance guarantees of the platform, and \emph{communication components} that ensure correct interconnections with other platforms and provide interfaces to other sub-systems. 
 
    \begin{figure}[thpb]
    	\centering
@@ -114,43 +112,45 @@ Platform-based design provides a meet-in-the-middle process where top-down refin
    	\label{figurelabel}
    \end{figure}
 
-A platform hides several possible refinement and implementations of the specifications. There are two ways to separate the platforms: dividing a task horizontally into multiple sub-tasks, and refining a high-level task vertically into lower-level layers. In this context, contracts serve as the communication components that define how these platforms interact with each other. Figure 1 shows a sample platform-based architecture of the taxi problem.
+A platform hides several possible implementations of the specifications. There are two ways to separate the platforms: dividing a task horizontally into multiple sub-tasks, and refining a high-level task vertically into lower-level layers. In this context, contracts serve as the communication components that define how these platforms interact with each other. Figure 1 shows a sample platform-based architecture of the aforementioned taxi center problem.
 
-A detailed explanation for the elements in contract-based design and platform-based design is given in $\cite{c4}$. The platform-based method using contracts will improve the design in several ways: 1) It achieves modularity for different functionalities. 2) It improves the scalability of the problem with finer division of the tasks.
+The interested reader is referred to $\cite{c4}$ for detailed definitions of the elements of contract-based design and platform-based design. To summarize, a platform-based method using contracts improves system design by: 1) achieving modularity for different functionalities, and 2) improving scalability of the problem with the finer division of tasks.
 
 \section{Platform-based Flow for Autonomous Taxi System Design Using Contracts}
 %Describe the design flow
 
-In the platform-based paradigm, the design structure is decomposed into a platform-based architecture, with hierarchical layering and one or more components at each layer. The establishment of the architucture is set up with respect to the functionality of each platform, separability of the platforms, and the library tools available at each platform. Platforms can be divided for distinct functionalities. For example, a strategic route planner can be naturally separated from hybrid controller that control the movements of a vehicle. Another factor is the separability of the platforms, or more specifically, whether separating the functionality of a task into sub-tasks will introduce shared variables in these low-level platforms, and whether there are compatible contracts among these platforms. As library tools may be different, seeing that there is an available computational tool for a platform can also be considered as a guideline for separating the platforms. This establishes the topology of the system.
+As described above, a platform-based design structure is decomposed into hierarchical layers, with one or more components at each layer. The architecture is established with respect to functionality, separability, and the library of tools available at each platform. With respect to functionality, in our example, a strategic route planner can be naturally separated from hybrid controller that controls the motion of a vehicle. Examining separability of the platforms involves determining whether separating the functionality of a task into sub-tasks will introduce shared variables in these low-level platforms, and whether there are compatible contracts among these platforms. Finally, as the availability of library tools may vary, ensuring that there is an available computational tool to implement a platform is also a good guideline for establishing the platform topology. %This establishes the topology of the system.
 
-Once the system topology is established, the design progresses through each component to carry out controller design. Controllers are designed for each platform while satisfying the boundary conditions of the contract of that platform. We express the control system specifications in the formalism of temporal logic. Temporal logic captures the timing aspect of a problem, and has many branches such as linear temporal logic (LTL) $\cite{c7}$ or signal temporal logic (STL) $\cite{c8}$. For the purpose of our paper, we utilized some formal synthesis methods that solve temporal logic specifications. The reason for using synthesis tools is that it eliminates the need for manually designing the controller, and provides an easier way for the designers to apply the state-of-the-art tools. While there can be different behaviors of a platform that all satisfy the specifications, controller design gives one acceptable implementation of the problem, and in some cases with optimality guarantees. 
+Once this topology is established, the design progresses to carry out controller design for each component. Controllers are designed for each platform while satisfying the boundary conditions of the contract of that platform. In our work, we express the control system specifications in the formalism of temporal logic, specifically linear temporal logic (LTL) $\cite{c7}$ and signal temporal logic (STL) $\cite{c8}$. We leverage existing algorithms for formal synthesis for these temporal logic specifications. The motivation to use synthesis tools comes from the fact that it eliminates the need for manually designing the controller, and enables the designers to easily enforce the desired contracts. %apply the state-of-the-art tools. 
+While there can be several different behaviors of a platform that satisfy the desired specification, controller design usually provides one satisfying implementation of the problem, in some cases with optimality guarantees, as discussed further in Section \ref{sec:results}. 
 
-\subsection{Reactive Control Synthesis for LTL Specifications}
-Reactive control refers to control protocols that constantly adjust according to environment states. The LTL specification for a reactive control protocol takes the form of $\psi = (\psi_e \rightarrow \psi_s)$, where $\psi_e$ is the environment specification and $\psi_s$ is the system specification. Given a contract $(A, G)$, the assumption $A$ can be specified in environment specification $\psi_e$ and system guarantee $G$ can be specified in system specification $\psi_s$. 
-\paragraph*{Application area}
-	LTL specifications considers the ordering of events. LTL operators include ``always'' $\square$ , ``eventually'' $\lozenge$, ``next'' $\bigcirc$, ``until'' $\mathbin{\mathcal{U}\kern-.1em}$, and their combinations. The design space for using LTL specifications grows exponentially. However, GR(1) $\cite{c9}$, a subset of LTL, can be solved in polynomial time. GR(1) specifications allow three types of specifications: initial condition $\psi_0$, which is satisfied at initial state, safety condition $\square \psi$, which is satisfied at all time, and progress condition $\square \lozenge \psi $, which is satisfied infinitely often.
-	The reactive synthesis for specification $\psi_e \rightarrow \psi_s$ treats the environment and the system as opponents that take steps in turn. Therefore, it can solve finite-state automata for two-player games, or more generally, discrete strategy planning problems.
+We now discuss several synthesis frameworks and tools that we apply to synthesize control at various levels of our platform-based system topology. For each method, we describe the formal language of the contracts it can enforce, the types of sub-problems to which it is most suited, and available tools and implementations. 
 
+\subsection{Game-Based Reactive Control Synthesis for LTL Specifications}
+Reactive control refers to control protocols that constantly adjust according to observed environment variables. The specification for a reactive control protocol takes the form of $\psi = (\psi_e \rightarrow \psi_s)$, where $\psi_e$ is the environment specification and $\psi_s$ is the system specification. Given an assume-guarantee contract $(A, G)$ to be satisfied by a controller, the assumption $A$ will be specified as an environment specification $\psi_e$, and the system guarantee $G$ as a system specification $\psi_s$. Here we consider reactive control specifications in linear temporal logic (LTL).
+
+\paragraph*{Applicability}
+	LTL formulas govern the ordering of events over infinite executions. LTL operators include ``always'' $\square$ , ``eventually'' $\lozenge$, ``next'' $\bigcirc$, ``until'' $\mathbin{\mathcal{U}\kern-.1em}$, and their combinations. The complexity of synthesizing reactive controllers that satisfy LTL specifications is doubly-exponential in the number of events of interest. However, for GR(1) $\cite{c9}$, a fragment of LTL, the reactive synthesis problem can be solved in time polynomial in the size of the problem design space, which is often much more tractable. GR(1) specifications allow three types of formulas in both assumptions and guarantees: an initial condition $\psi_0$, which is satisfied at every initial state, safety conditions $\square \psi$, to be satisfied at all time, and progress conditions of form $\square \lozenge \psi $, which are satisfied infinitely often.  The reactive synthesis algorithm for specification $\psi_e \rightarrow \psi_s$ treats the environment and the system as opponents that take turns in a game; a winning strategy for the system provides a controller that enforces the specification. The result is a finite-state transducer (more precisely a Mealy machine) that reads environment inputs and provides actions for the system, such that the specification is satisfied even in uncertain environments. This method is therefore most suitable for synthesizing high-level, discrete supervisory controllers.
+%Therefore, it can solve finite-state automata for two-player games, or more generally, discrete strategy planning problems.
 	
 \paragraph*{Available tools}
-Temporal logic planning toolbox (TuLiP) $\cite{c10}$ uses a collection of tools to solve reactive control system that is correct-by-construction. It considers discrete systems, or alternatively, it takes a continuous system and discretize it using proposition preserved partition. The output is a Mealy machine that provides a strategy for satisfying the specification in uncertain environments.
-	
+The Temporal Logic Planning Toolbox (TuLiP) $\cite{c10}$ provides a collection of tools to solve reactive control problems, producing controllers that are correct-by-construction. It considers discrete systems, or alternatively, it takes a continuous system and discretizes it using proposition preserved partitions. 	
 
 
-\subsection{Optimization-based Reactive Synthesis Using Mixed-integer Linear Programming (MILP)}
-Reactive synthesis for STL specifications can be solved as a series of optimization problems using mixed-integer linear encoding $\cite{c17}$. STL can specify the absolute timing of events, meaning the time interval for which the specifications need to be satisfied. In this case, the control methodology is model predictive control (MPC), which observes the current plant at every timestep and compute the controller signal up to a horizon $\textit{H}$ $\cite{c17}$ such that the specifications are satisfied within every time interval.
+\subsection{Optimization-based Synthesis for Timed Specifications}
+Reactive synthesis for timed specifications can be solved as a series of optimization problems using a mixed integer linear encoding $\cite{c17}$. Timed logics can specify the absolute timing of events, including for example the duration for which a property needs to hold, or a time horizon within which an event must occur. The timed logic used in this work is Signal Temporal Logic (STL), and the control methodology is model predictive control (MPC), which observes the current plant at every timestep and computes the controller signal up to a horizon $\textit{H}$ $\cite{c17}$ such that the specifications are satisfied within every time interval.
 
-\paragraph*{Application area}
+\paragraph*{Applicability}
 	 %STL specifications include initial condition such as $x(0)=x_0$, safety condition such as $\square_{[t_1, t_2]} (x(t)>x_1)$, progress condition such as $\square_{[t_1, t_2]} \lozenge_{[t_3, t_4]} (x(t)>x_1)$, and goal condition such as $\lozenge_{[t_1,t_2]}(x(t)>x_1)$. Since the synthesis is solving optimization problems, this method guarantees optimality of the solution. It is also suitable for solving real-time problems with timing constraints.
-STL specifications include operators such as ``always'' $\square$, ``eventually'' $\lozenge$, ``until'' $\mathbin{\mathcal{U}\kern-.1em}$ with a time interval $[\textit{t}_\textit{0},\textit{t}_\textit{1}]$. This method guarantees optimality of the solution and is suitable for solving real-time problems with timing constraints.
+STL specifications include operators such as ``always'' $\square$, ``eventually'' $\lozenge$, ``until'' $\mathbin{\mathcal{U}\kern-.1em}$ with a time interval $[\textit{t}_\textit{0},\textit{t}_\textit{1}]$. This method guarantees optimality of the solution and is suitable for solving real-time problems with timing constraints, and synthesizing continuous as well as discrete control inputs at runtime.
 
 \paragraph*{Available tools}
-	BluSTL $\cite{c11}$ is a Matlab toolbox. Given the system dynamics, STL specifications and the cost function, it yields the control sequence according to the environment input during simulation.
+	BluSTL $\cite{c11}$ is a Matlab toolbox for automatically generating hybrid controllers from STL specifications. Given the system dynamics, STL specifications, cost function, and assumptions on the environment, it yields a model predictive control scheme for generating online control inputs, such that the specification is met in any environment that satisfies the assumptions, while minimizing the cost function.
 	
 
 \section{System Topology Design}
 %Describe how the system is setup
-Unfortunately, there is no automatic synthesis tool for topology design that automatically breaks the problems into pieces and gives the topology of the system. Therefore, deriving the topology of the system depends on the creativity of the designer. 
+Unfortunately, there is no automatic synthesis tool for system topology design that automatically divides the problems into tractable pieces and generates the topology of the system. Therefore, deriving the topology of the system depends on the creativity of the designer. 
 
 \begin{figure}[thpb]
 	\centering
@@ -161,70 +161,74 @@ Unfortunately, there is no automatic synthesis tool for topology design that aut
 	\label{figurelabel}
 \end{figure}
 
-A proposed design architecture is shown in Figure 2, which divides the planner into strategic level and navigation level. Strategically, the taxi center system should take requests from passengers, and have a dispatcher to assign taxis to requests. Route planners should plan the route of the taxis so that all the passengers assigned to them are picked up and eventually dropped off. They also monitor the availability status of the taxis. The navigation level navigates the taxis along the designated route.
+Our proposed design architecture is shown in Figure 2, which divides the planner into a strategic level and a navigation level. At the strategic level, the taxi center system should take requests from passengers and have a dispatcher to assign taxis to requests. Route planners should plan the route of the taxis so that all the passengers assigned to them are picked up and eventually dropped off; they also monitor the availability status of the taxis. The navigation level navigates the taxis along the designated route.
 
-Considering functionality, the dispatcher is a centralized controller whose main task is to monitor the distributed system of multiple taxis, and the route planners are local controllers for the taxis. The navigation planner takes the dynamics of the car into consideration and provides the actual controller signal. The functionality of a platform with respect to the whole system will be represented as the contract of the platform. The allowed operation environment and the tasks or specifications that the platform will satisfy becomes the assumption $A$ and the guarantee $G$ respectively in the assume-guarantee relation $(A, G)$ of the contract. 
+Considering functionality, the dispatcher is a centralized controller whose main task is to monitor the distributed system of multiple taxis, and the route planners are local controllers for the taxis. The navigation planner takes the dynamics of the car into consideration and provides the actual control inputs. The functionality of each platform with respect to the whole system will be represented as the platform's contract. The allowed operation environment and the tasks or specifications that the platform will satisfy form the assumption $A$ and the guarantee $G$ respectively in the assume-guarantee contract $(A, G)$.
 
-With respect to separability, the dispatcher does not need to know the details of how the routes are planned, and the route planner does not need to know the information about other taxis. This significantly reduces the design space for the sub-systems. There may be, however, some shared variables between the platforms. For example, variables that indicate the current status of a taxi, e.g. being full, may be controlled by a local controller such as route planner, and passed into a centralized controller such as dispatcher. The dispatcher also needs to pass the variable to the route planner that indicates which taxi is assigned to which request. Therefore, the contracts for different platforms follow that the behavioral guarantee of one platform will be captured by other platforms that use the same shared variables in its environment assumption. A real-valued problem below shows an example pattern in which a high-level contract $C$ has two output variables $y$, $z$ shared with the input of two lower-level conrtacts $C_1$, $C_2$: 
+With respect to separability, we assume that the dispatcher does not need to know all the details of how the routes are planned, and the route planner does not need full information about the other taxis. Arguments can be made to the contrary, but these are defensible assumptions that significantly reduce the design space for the sub-systems. We do, however, allow some shared variables between the platforms. For example, variables that indicate the current status of a taxi, e.g. being full, are controlled by a local controller such as route planner, and passed into a centralized controller such as dispatcher. The dispatcher also needs to share a variable with the route planner that indicates which taxi is assigned to which request. The contracts for different platforms obey the general rule that the behavioral guarantees of one platform will be leveraged by other platforms that use its shared variables in their environment assumptions. 
 
+%For illustrative purposes, a real-valued problem below shows an example pattern in which a high-level contract $C$ has two output variables $y$, $z$ shared with the input of two lower-level contracts $C_1$ and $C_2$: 
 
-\newtheorem{example}{Example}[section]
+% VASU: this is unnecessary. I would rather see the contracts for the components in the taxi example below.
 
-\begin{example}
-$$
- C\left\{
- \begin{aligned}
- 	\text{variables}: &
- 	\left\{
- 	\begin{aligned}
- 		\text{input}: &  x \\
- 		\text{output}: &  y, z\\
- 	\end{aligned}
- 	\right.\\
- 	\text{type}: &  x, y, z \in \mathbb{R} \\
- 	\text{assume}: & x>0 \\ 
- 	\text{behavior}: & y = f_1(x)\\
- 	& z = f_2(x)
- \end{aligned}
- \right.
- $$
-$ C_1\left\{
-\begin{aligned}
-\text{variables}: &
-\left\{
-\begin{aligned}
-\text{input}: &  y \\
-\text{output}: &  p\\
-	\end{aligned}
-	\right.\\
-\text{type}: &  y, p \in \mathbb{R} \\
-\text{assume}: & y \in \text{range of }\\
-& f_1(x)  \\ 
-\text{behavior}: & p = g(y)
-\end{aligned}
-\right.
-$ $C_2\left\{
-\begin{aligned}
-\text{variables}: &
-\left\{
-\begin{aligned}
-\text{input}: &  z \\
-\text{output}: &  q\\
-	\end{aligned}
-	\right.\\
-\text{type}: &  z, q \in \mathbb{R} \\
-\text{assume}: & z \in \text{range of }\\
-& f_2(x)  \\ 
-\text{behavior}: & q = h(z)
-\end{aligned}
-\right.
-$
-\end{example}
-$$$$
+%\newtheorem{example}{Example}[section]
+%
+%\begin{example}
+%$$
+% C\left\{
+% \begin{aligned}
+% 	\text{variables}: &
+% 	\left\{
+% 	\begin{aligned}
+% 		\text{input}: &  x \\
+% 		\text{output}: &  y, z\\
+% 	\end{aligned}
+% 	\right.\\
+% 	\text{type}: &  x, y, z \in \mathbb{R} \\
+% 	\text{assume}: & x>0 \\ 
+% 	\text{behavior}: & y = f_1(x)\\
+% 	& z = f_2(x)
+% \end{aligned}
+% \right.
+% $$
+%$ C_1\left\{
+%\begin{aligned}
+%\text{variables}: &
+%\left\{
+%\begin{aligned}
+%\text{input}: &  y \\
+%\text{output}: &  p\\
+%	\end{aligned}
+%	\right.\\
+%\text{type}: &  y, p \in \mathbb{R} \\
+%\text{assume}: & y \in \text{range of }\\
+%& f_1(x)  \\ 
+%\text{behavior}: & p = g(y)
+%\end{aligned}
+%\right.
+%$ $C_2\left\{
+%\begin{aligned}
+%\text{variables}: &
+%\left\{
+%\begin{aligned}
+%\text{input}: &  z \\
+%\text{output}: &  q\\
+%	\end{aligned}
+%	\right.\\
+%\text{type}: &  z, q \in \mathbb{R} \\
+%\text{assume}: & z \in \text{range of }\\
+%& f_2(x)  \\ 
+%\text{behavior}: & q = h(z)
+%\end{aligned}
+%\right.
+%$
+%\end{example}
+%$$$$
 
-Considering library tools, the computational blocks of a platform may solve problems in one domain but not the other domains. Therefore, each platform should limit its functionality within the use of its computational blocks. As strategic level mainly concerns discrete state space problems and navigation level mainly concerns continuous state space problems, they may need different platforms that have computational blocks targetting at their corresponding problems.
+Considering the library of available tools, each platform should limit its functionality to within the use of its available computational blocks. As the strategic level mainly concerns discrete state space problems and the navigation level mainly concerns continuous state space problems, it follows that they likely need different platforms that have computational blocks targeting at their corresponding problems.
 
-As a result of the platform decomposition, we give contracts for these platforms as below. 
+As a result of the platform decomposition, we provide contracts for these platforms as below. 
+
 $$ C_{d}\left\{
 \begin{aligned}
 \text{variables}: &
@@ -243,53 +247,56 @@ $$ C_{d}\left\{
 \end{aligned}
 \right.
 $$
-where $C_d$ is the contract for the dispatcher. The contracts for the route planner and path navigation can be expressed similarly.
-%$$ C_p\left\{
-%\begin{aligned}
-%\text{variables}: &
-%\left\{
-%\begin{aligned}
-%\text{input}: & \text{taxi assignment, ready} \\
-%\text{output}: &  \text{target location, taxi availability}\\
-%\end{aligned}
-%\right.\\
-%\text{type}: &  \text{all in Boolean}\\
-%\text{assumption}: & \text{When taxi is full, there will be no new}\\
-%& \text{request assigned.} \\
-%\text{behavior}: & \text{Determine whether the taxi is full.} \\
-%& \text{Specify the next target location, or the}\\
-%&\text{route that satisfies requests.}
-%\end{aligned}
-%\right.
-%$$
-%$$ C_n\left\{
-%\begin{aligned}
-%\text{variables}: &
-%\left\{
-%\begin{aligned}
-%\text{input}: & \text{target location} \\
-%\text{output}: &  \text{ready}\\
-%\end{aligned}
-%\right.\\
-%\text{type}: &  \text{all in Boolean}\\
-%\text{assumption}: & \text{No new target location will be assigned}\\
-%& \text{until the taxi reaches the current target.}\\
-%\text{behavior}: & \text{Navigate the taxi to target location.} \\
-%& \text{Signal when the taxi is ready.}\\
-%\end{aligned}
-%\right.
-%$$
+
+$$ C_p\left\{
+\begin{aligned}
+\text{variables}: &
+\left\{
+\begin{aligned}
+\text{input}: & \text{taxi assignment, ready} \\
+\text{output}: &  \text{target location, taxi availability}\\
+\end{aligned}
+\right.\\
+\text{type}: &  \text{all in Boolean}\\
+\text{assumption}: & \text{When taxi is full, there will be no new}\\
+& \text{request assigned.} \\
+\text{behavior}: & \text{Determine whether the taxi is full.} \\
+& \text{Specify the next target location, or the}\\
+&\text{route that satisfies requests.}
+\end{aligned}
+\right.
+$$
+
+$$ C_n\left\{
+\begin{aligned}
+\text{variables}: &
+\left\{
+\begin{aligned}
+\text{input}: & \text{target location} \\
+\text{output}: &  \text{ready}\\
+\end{aligned}
+\right.\\
+\text{type}: &  \text{all in Boolean}\\
+\text{assumption}: & \text{No new target location will be assigned}\\
+& \text{until the taxi reaches the current target.}\\
+\text{behavior}: & \text{Navigate the taxi to target location.} \\
+& \text{Signal when the taxi is ready.}\\
+\end{aligned}
+\right.
+$$
+
+Here $C_d$ is the contract for the dispatcher, $C_p$ for the route planner and $C_n$ for the path navigation.
+%The contracts for the route planner and path navigation can be expressed similarly.
 
 
 \section{System Controller Design}
 %Describe how the controller are synthesized for example how are the specifications written in LTL/STL to satisfy the system requirements.
-
-With the system topology established, we synthesize the controllers for the platforms. For each platform, we consider its contract and specify the behavior of the platform using temporal logic specifications.
+With the system topology established, we synthesize controllers for each platforms. For each platform, we consider its contract and specify the desired behavior of the platform using temporal logic specifications.
 
 \subsection{Dispatcher}
-The dispatcher considers the strategy of the taxi center, and therefore we use TuLiP to synthesize the controller. Using LTL (and transforming to GR(1)) specifications, we provide a refinement of the contract by specifying the environment variables, system variables, environment specfications and system specifications as follows:
+The dispatcher considers the strategy of the taxi center, and therefore we use TuLiP to synthesize the controller. Using GR(1) specifications, we provide a refinement of the contract by specifying the environment variables, system variables, environment specifications and system specifications as follows:
 \paragraph*{\textbf{Environment variables}}
-The environment input includes $\textit{request}_\textit{i} \text{ for }\textit{i}\in\{1, 2, ... n\}$, which indicates the n possible requests from the passengers, and $\textit{full}_\textit{j}  \text{ for }\textit{j}\in\{1, 2, ... m\}$, which indicates the availability of the m taxis of the taxi center. Since here we only monitor if a taxi is full or not, we use ``full'' instead of ``available''. However, it is possible to use ``available'' in the future to capture all possible failure of the taxi. If $\textit{full}$ is true, then the taxi is not available.
+The environment input includes $\textit{request}_\textit{i} \text{ for }\textit{i}\in\{1, 2, ... n\}$, which indicates the $n$ possible requests from the passengers, and $\textit{full}_\textit{j}  \text{ for }\textit{j}\in\{1, 2, ... m\}$, which indicates the availability of the $m$ taxis of the taxi center. Since here we only monitor if a taxi is full or not, we use ``full'' instead of ``available''. However, it is possible to use ``available'' in the future to capture all possible failure of the taxi. If $\textit{full}$ is true, then the taxi is not available.
 
 \paragraph*{\textbf{System variables}}
 The system output includes $\textit{taxi}_\textit{j,i} \text{ for }\textit{j}\in\{1, 2, ... m\}\text{ and for }\textit{i}\in\{1, 2, ... n\}$, where $\textit{taxi}_\textit{j,i}$ being true indicates taxi $\textit{j}$ is assigned to request $\textit{i}$.
@@ -323,7 +330,8 @@ The variables $taxi_{j,i}$ for $i \in \{1,2,..., n\}$ are defined to be mutex.
 %The above specifications give an implementation of the platform that satisfies realizability requirement.
 
 \subsection{Route planner}
-In the same way, we use TuLiP to synthesize the controller for route planner. In this paper, we simply abstract the route to be in one of the pick-up locations. However, given a continuous map, we can use TuLiP to compute an ``overapproximate'' discrete abstraction of the map that is reasonably divided based on vehicle dynamics and properties, but assuming no obstacles. This alleviates the burden of the navigation level as the navigation level should guarantee success unless a serious obstacle comes up. While contracts define the input and output variables, there may be other local variables used to help specify the behavior of the platform.
+We also use TuLiP to synthesize the controller for route planner. In this paper, we simply abstract the route over the pick-up locations, which partition the map. However, given a continuous map, we can use TuLiP to compute an ``overapproximate'' discrete abstraction of the map that is reasonably divided based on vehicle dynamics and properties, but assuming no obstacles. %This alleviates the burden of the navigation level as the navigation level should guarantee success unless a serious obstacle comes up. 
+%While contracts define the input and output variables, there may be other local variables used to help specify the behavior of the platform.
 
 \paragraph*{\textbf{Environment variables}}
 The environment input of the route planner for taxi $\textit{j}$ are $\textit{request}_\textit{i}$ for $\textit{i}\in\{1,2, ..., n\}$, which takes the output value of $\textit{taxi}_\textit{j,i}$ for $\textit{i}\in\{1,2, ..., n\}$ from the dispatcher, and $\textit{ready}$ from the path navigation platform, which indicates if the taxi has reached the current planned location and is ready to receive a new location.
@@ -332,11 +340,11 @@ The environment input of the route planner for taxi $\textit{j}$ are $\textit{re
 The system output $\textit{location}_\textit{i}$ for $\textit{i}\in\{1,2, ..., n\}$, corresponding to the pick-up locations for the n requests, and $\textit{des}$ indicate where the next target location is. $\textit{full}$ is another system output passed to the dispatcher as $\textit{full}_\textit{j}$. Assume the maximum number of requests that a taxi can take is $\textit{l}$, then there are local system variables including $\textit{wait}_\textit{k,i}$ for $\textit{k}\in\{1,2,...,l\}$ and $\textit{i}\in\{1,2, ...,n\}$ and $\textit{seat}_\textit{k,i}$ for $\textit{k}\in\{1,2,...,l\}$ and $\textit{i}\in\{1,2, ...,n\}$ that are used to indicate the two phases of the assigned requests: if $\textit{request}_\textit{i}$ has been assigned but the passenger is still waiting to be picked up, and if the passenger has been picked up and is seated in the taxi until dropped off at the destination.
 
 \paragraph*{\textbf{Environment specifications}}
-We first specify the assumption on $ready$ to avoid when $ready$ is never true and the goal is impossible to be satisfied,
+We first specify the assumption on $ready$, to avoid the case where $ready$ is never true and the goal is never satisfied,
 $$\square \lozenge ready$$
 
 
-The assumptions on assignment that there will not be a new request assignment when the taxi is full, and there is only one request at a time are specified as
+We add assumptions on the assignment, to ensure that there will not be a new request assigned when the taxi is full, and there is only one request at a time are specified:
 $$ \square \left(full \Rightarrow \bigcirc \bigwedge_n \lnot request_i\right)$$
 $$\bigwedge_n \square \left(request_i \Rightarrow \bigwedge_{n\text{ except }i} \lnot request_i\right)$$
 
@@ -344,8 +352,6 @@ $$\bigwedge_n \square \left(request_i \Rightarrow \bigwedge_{n\text{ except }i} 
 We first specify that the assigned requests cannot be in both phases. Then, the variable $full$ is defined as all assigned requests are in either of the two phases,
 %$$\bigwedge_l \square \left(\bigwedge_n \lnot wait_{k,i} \vee \bigwedge_n \lnot seat_{k,i}\right)$$
 $$ \square \left( full \Leftrightarrow \bigwedge_l \left( \bigvee_n wait_{k,i} \vee \bigvee_n seat_{k,i}\right) \right) $$
-
-
 
 When the taxi is not ready, we specify that the target location should not change.
 $$ \bigwedge_n \square \left(location_i \Rightarrow \bigcirc\left( \lnot ready \Rightarrow location_i\right)\right)$$
@@ -358,7 +364,6 @@ $$ \bigwedge_n \square\left( \bigcirc request_i \Rightarrow \bigvee_l \left( \ln
 & \left.\qquad \qquad \qquad \bigwedge_{l\text{ except }k} \left(  \lnot wait_{k,i} \Rightarrow \bigcirc \lnot wait_{k,i}\right)\right)
 \end{split}
 \end{equation*}
-
 
 The rest of the transition relations of $wait_{k,i}$ and $seat_{k,i}$ are specified. As an example, the specifications on $wait_{k,i}$ are given as follows,
 $$\bigwedge_l \bigwedge_n \square\left(wait_{k,i} \Rightarrow \bigcirc\left(\lnot location_i \Rightarrow wait_{k,i}\right)\right)$$
@@ -379,11 +384,11 @@ $$\bigwedge_l \bigwedge_n \square\left(wait_{k,i} \Rightarrow \bigcirc\left(loca
 %\end{align}
 %\end{equation*}
 
-In the end, we want to specify that eventually the taxis go to the required locations to finish the requests,
+In the end, we want to specify that eventually the taxis go to the required locations to service the requests,
 $$ \bigwedge_n \square \left(\bigvee_l wait_{k,i} \Rightarrow \lozenge location_i\right)$$
 $$ \square \left(\bigvee_l \bigvee_n  seat_{k,i} \Rightarrow \lozenge des\right)$$
 
-The variables $wait_{k,i}$ for $i\in\{1,2, ...,n\}$, variables $location_i$ for $i\in\{1,2, ..., n\}$ and $des$, variables $seat_{k,i}$ for $i\in\{1,2, ...,n\}$ are defined to be mutex. Also, there should always be one and only one $location_i$ or $des$ that is true.
+The variables $wait_{k,i}$ for $i\in\{1,2, ...,n\}$, variables $location_i$ for $i\in\{1,2, ..., n\}$ and $des$, variables $seat_{k,i}$ for $i\in\{1,2, ...,n\}$ are defined to be mutually exclusive. Also, there should always be one and only one $location_i$ or $des$ that is true.
 %$$\square \left( \bigvee_n location_i \vee des\right) $$
 %$$\bigwedge_l \bigwedge_n\square \left(wait_{k,i} \Rightarrow \bigwedge_{n\text{ except }i} \lnot wait_{k,i}\right)$$
 %$$\bigwedge_n \square\left(location_i \Rightarrow \bigwedge_{n\text{ except }i} \lnot location_i\right) $$
@@ -391,7 +396,7 @@ The variables $wait_{k,i}$ for $i\in\{1,2, ...,n\}$, variables $location_i$ for 
 %The above specifications gives an implementation of the path planning platform that satisfies realizability requirement.
 
 \subsection{Path navigation}
-Path navigation considers the dynamics of the car, and navigates the taxi to follow the route designated by the route planner. BluSTL can be used for controller synthesis to this platform. For the purpose of this paper, we consider the following simple dynamics,
+The path navigation platform considers the dynamics of the car, and navigates the taxi to follow the route designated by the route planner. BluSTL can be used for controller synthesis for this platform. For the purpose of this paper, we consider the following simple dynamics,
 \begin{equation*}
 \begin{split}
 \dot{x} = u_1\\
@@ -400,7 +405,7 @@ Path navigation considers the dynamics of the car, and navigates the taxi to fol
 \end{equation*}
 where $u_1$ and $u_2$ are controller signals that control the velocity of the taxi in two directions $x$ and $y$. Since BluSTL allows synthesis for linear and switched linear models, we can use any exact or approximate dynamics that fit these categories (e.g. piecewise affine approximation of Dubins dynamics).
 
-In BluSTL, the system variables at time $\textit{t}$ are captured by the set of state variables $\textit{X}$ and the set of input variables $\textit{U}$, and the environment variables are captured by the set of disturbance signal $\textit{W}$. While we can plan the entire strategy beforehand, when considering the navigation level, it is more realistic to synthesize the controller on-line. Similar to the previous sections, we specify environment variables, system variables, environment specifications and system specifications.
+In BluSTL, the system variables at time $\textit{t}$ are captured by the set of state variables $\textit{X}$ and the set of input variables $\textit{U}$, and the environment variables are captured by the set of disturbance signal $\textit{W}$. While we can plan the entire strategy beforehand, when considering the navigation level, it is more realistic to synthesize the controller online in a model predictive fashion, so that obstacles can be accommodated when they pop up. Similar to the previous sections, we specify environment variables, system variables, environment specifications and system specifications.
 
 \paragraph*{\textbf{Environment variables}}
 The disturbance signal includes the Boolean variable $\textit{close(t)} \in \textit{W}$ that indicates if at time $\textit{t}$, the sensor on the taxi detects a close object, and real-valued $\textit{xpos(t)} \in \textit{W}$ and $\textit{ypos(t)} \in \textit{W}$, which indicate $x$ and $y$ position of the other taxis.
@@ -444,19 +449,18 @@ In the end, in order to avoid taxis crashing into each other, we use a buffer va
 \end{align} 
 
 \subsection{Communication Platform}
-After synthesizing controllers for all components, the controllers need to be connected. The contracts have specified the ports for different controllers, and during implementation, there are two major problems to be considered: which communication platform can host the communication between the components, and how to control the synchronous or asynchronous communication between the components.
+After synthesizing controllers for all components, the controllers need to be connected. Since the contracts have specified the ports for different controllers, during implementation there are two major problems to be considered: which communication platform can host the communication between the components, and how to control the synchronous or asynchronous communication between the components.
 
-In our case, because the distributed taxi systems run concurrently, Robotic Operating System (ROS) $\cite{c12}$ can serve as the communication platform. We examine here how ROS can be used to integrate the controllers synthesized by different synthesis tools.
-
+In our case, because the distributed taxi systems run concurrently, Robotic Operating System (ROS) $\cite{c12}$ can serve as the communication platform. We use ROS to integrate the controllers synthesized by different synthesis tools.
 TuLiP and BluSTL give different forms of controller output, and ROS interfaces for these two are rospy, which is the python API of ROS, and Matlab package Robotic System Toolbox $\cite{c13}$ that allows easy interface with ROS, respectively. 
 
 %ROS provides two ways of communication: publisher and subsriber, client and server. A publisher actively publishes messages, while a server passively responds upon request by the client. We use a combination of the two to allow asynchronous communication of the components. Every controller can be a ROS node of the final integrated system. Using publisher and subscriber, we can specify active input variables, meaning variables that trigger the controller state transition, to be different topics. Platforms whose contracts include these active input variables can subscribe to the corresponding topics. If new values are published as messages to one of those topics, the subscribed platforms will generate the new controller signal. Using client and server, we can record the values of the status variables, which indicate what state the system is in, in the server, and return the value when requested by the client. If a contract considers more than one variables to be environment input, for status variables, the platform can be the client to request their values whenever state transition occurs, for more than one active variables, if they are asynchronous, default values can be associated with them for when they are not triggering the state transition, or if synchronous, we can write a new node as a synchronizer for these variables.
 
 %In our problem, the dispatcher treats requests as active input and taxi availability as status variables. The route planner treats taxi assignment and ready as active input. The path navigation treats every change in target location as active input.
 
-\section{Design Example and Result}
+\section{Example and Discussion}\label{sec:results}
 %Give a detailed implementation and show demonstration.
-To demonstrate the results, we solve a concrete problem as an example. For a simple version, we specify that there are totally three different requests, two taxis available and the maximum number of passengers in each taxi is two. The different locations are connected to the destination by a bridge. Figure 3 shows the visualization of the problem.
+We demonstrate the results of our control design methodology on a concrete problem instance. We specify that there are in total three different requests, two available taxis, and the maximum number of passengers in each taxi is two. The different locations are connected to the destination by a bridge. Figure 3 shows the visualization of the problem.
 \begin{figure}[thpb]
 	\centering
 	%\framebox{\parbox{3in}{We suggest that you use a text box to insert a graphic (which is ideally a 300 dpi TIFF or EPS file, with all fonts embedded) because, in an document, this method is somewhat more stable than directly inserting a picture.
@@ -487,7 +491,7 @@ Figure 5 shows the end state of the simulation. The record of the location histo
 	\label{figurelabel}
 \end{figure}
 
-During simulation, the taxis successfully avoid the static obstacle. Figure 6 shows an intermediate state when the second taxi was going from bridge to location 1. The taxi went downwards to stay outside the boundary of the obstacle.
+During simulation, the taxis successfully avoid the static obstacle. Figure 6 shows an intermediate state when the second taxi was going from the bridge to location 1. The taxi went downwards to stay outside the boundary of the obstacle.
 \begin{figure}[thpb]
 	\centering
 	%\framebox{\parbox{3in}{We suggest that you use a text box to insert a graphic (which is ideally a 300 dpi TIFF or EPS file, with all fonts embedded) because, in an document, this method is somewhat more stable than directly inserting a picture.
@@ -497,24 +501,23 @@ During simulation, the taxis successfully avoid the static obstacle. Figure 6 sh
 	\label{figurelabel}
 \end{figure}
 
-Given the results, we discuss the performance of the designed system with respect to the system requirements.
+We now discuss the performance of the designed system with respect to the system requirements described in Section \ref{sec:reqs}.
 \begin{itemize}
 	\item
-	The service requirement is satisfied as the synthesized TuLiP strategy satisfies the service-level specification of the problem and the low-level controllers follow the strategy to navigate the taxis.
+	The service requirement is satisfied as the synthesized TuLiP strategy provably satisfies the service-level specification of the problem and the low-level controllers follow the strategy to navigate the taxis.
 	\item
-	The optimality is satisfied on the low-level navigation platform, but the overall optimality is not guaranteed as optimality in reactive setting is not configurable. TuLiP gives an optimal solution in the sense that each request is fulfilled in as few discrete steps as possible, but it does not support a customized cost function that allows the designer to specify the direction for optimization.
+	The low-level navigation platform tried to minimize the control effort, but the overall optimality is not guaranteed as optimality in reactive setting is not well-defined. TuLiP gives an efficient solution in the sense that each request is fulfilled in as few discrete steps as possible, but it does not support a customized cost function that allows the designer to specify the direction for optimization.
 	\item
 	The safety requirement is satisfied by having different BluSTL sections update controller while continuously monitoring other taxis. It allows a more flexible and less conservative solution than specifying mutual exclusion requirements on the taxi locations.
-	
 \end{itemize}   
 
 
 
 \section{Conclusions}
 
-In this paper, we proposed using contract-based design with a platform-based paradigm in solving an autonomous taxi system. More specifically, we proposed the workflow for using platform-based design in the problem, which includes the independent implementation of system topology and controller synthesis. We established a promising framework for similar task and motion planning problems, which includes the use of synthesis tools and communication platform. We examined in detail the implementation of the autonomous taxi system and illustrated the design process following the proposed design flow. The example problem and its simulation show positive results  about utilizing contract-based design in complex system design.
+In this paper, we proposed using contract-based design within a platform-based paradigm to design an autonomous taxi system. More specifically, we described in detail the workflow that applies when using platform-based design to solve the problem. This includes the independent implementation of system topology and controller synthesis. We established a promising framework for similar task and motion planning problems, which includes the use of off-the-shelf synthesis tools and communication platforms. We investigated in detail the special case of the autonomous taxi system, and illustrated the entire design process following the proposed design flow. The example problem and its simulation show positive results, which support the use of contract-based design for such complex autonomous systems.
 
-Future work on exploring contract-based design can include developing contract synthesis tools that formalize the design process of system topology, enriching the framework in designing distributed autonomous vehicle systems, and generalizing a platform-based architecture for robotic problems using contracts.
+Future work on exploring contract-based design includes developing contract synthesis tools that formalize the design process of system topology, enriching the framework for designing distributed autonomous vehicle systems, and applying the proposed contract-based architecture to other robotics problems.
 
 
 %\addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
