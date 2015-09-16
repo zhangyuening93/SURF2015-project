@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.16)  15 SEP 2015 06:05
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.16)  15 SEP 2015 20:14
 entering extended mode
 **final_report_7.tex
 ("D:\courses_UM\SURF\progress report\final report\latex\final_report_7.tex"
@@ -284,30 +284,52 @@ File: initial.jpg Graphic file (type jpg)
 Package pdftex.def Info: initial.jpg used on input line 468.
 (pdftex.def)             Requested size: 238.98412pt x 147.90274pt.
 
-<intermediate_3.jpg, id=31, 646.66594pt x 399.74344pt>
-File: intermediate_3.jpg Graphic file (type jpg)
+<intermediate_4.jpg, id=31, 645.16031pt x 398.99063pt>
+File: intermediate_4.jpg Graphic file (type jpg)
 
-<use intermediate_3.jpg>
-Package pdftex.def Info: intermediate_3.jpg used on input line 478.
+<use intermediate_4.jpg>
+Package pdftex.def Info: intermediate_4.jpg used on input line 478.
+(pdftex.def)             Requested size: 238.70557pt x 147.62422pt.
+ <result_3.jpg, id=32, 645.91313pt x 399.74344pt>
+File: result_3.jpg Graphic file (type jpg)
+
+<use result_3.jpg>
+Package pdftex.def Info: result_3.jpg used on input line 489.
+(pdftex.def)             Requested size: 238.98412pt x 147.90274pt.
+ <staticavoid_2.jpg, id=33, 646.66594pt x 399.74344pt>
+File: staticavoid_2.jpg Graphic file (type jpg)
+
+<use staticavoid_2.jpg>
+Package pdftex.def Info: staticavoid_2.jpg used on input line 499.
 (pdftex.def)             Requested size: 239.26265pt x 147.90274pt.
- <result_2.jpg, id=32, 646.66594pt x 399.74344pt>
-File: result_2.jpg Graphic file (type jpg)
-
-<use result_2.jpg>
-Package pdftex.def Info: result_2.jpg used on input line 489.
-(pdftex.def)             Requested size: 239.26265pt x 147.90274pt.
- <staticavoid.jpg, id=33, 646.66594pt x 400.49625pt>
-File: staticavoid.jpg Graphic file (type jpg)
-
-<use staticavoid.jpg>
-Package pdftex.def Info: staticavoid.jpg used on input line 499.
-(pdftex.def)             Requested size: 239.26265pt x 148.18129pt.
  [6 <D:/courses_UM/SURF/progress report/final report/latex/initial.jpg>]
+Underfull \hbox (badness 1565) in paragraph at lines 561--563
+[]\OT1/ptm/m/n/8 W. Damm. Contract-based anal-y-sis of au-to-mo-tive and avion-
+ic-
+ []
+
+
+Underfull \hbox (badness 2707) in paragraph at lines 561--563
+\OT1/ptm/m/n/8 s ap-pli-ca-tion-s: The SPEED-S ap-proach. In $[]$
+ []
+
 Missing character: There is no ´ in font ptmr7t!
+[7 <D:/courses_UM/SURF/progress report/final report/latex/intermediate_4.jpg> <
+D:/courses_UM/SURF/progress report/final report/latex/result_3.jpg> <D:/courses
+_UM/SURF/progress report/final report/latex/staticavoid_2.jpg>]
 Missing character: There is no ´ in font ptmr7t!
- [7 <D:/courses_UM/SURF/progress report/final report/latex/intermediate_3.jpg> 
-<D:/courses_UM/SURF/progress report/final report/latex/result_2.jpg> <D:/course
-s_UM/SURF/progress report/final report/latex/staticavoid.jpg>]
+
+Underfull \hbox (badness 1831) in paragraph at lines 568--571
+[]\OT1/ptm/m/n/8 V. Ra-man, A. Donze, D. Sadigh, R. M. Mur-ray, and S. A.
+ []
+
+
+Underfull \hbox (badness 2707) in paragraph at lines 568--571
+\OT1/ptm/m/n/8 Se-shi-a. Re-ac-tive syn-the-sis from sig-nal tem-po-ral log-ic 
+spec-i-fi-
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 573--574
 []\OT1/ptm/m/n/8 Mathworks.com, 'Robotic-s Sys-tem Tool-box -
  []
@@ -341,11 +363,11 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 2636 strings out of 495354
- 36123 string characters out of 3183354
+ 2638 strings out of 495354
+ 36154 string characters out of 3183354
  99480 words of memory out of 3000000
- 5792 multiletter control sequences out of 15000+200000
- 41652 words of font info for 86 fonts, out of 3000000 for 9000
+ 5793 multiletter control sequences out of 15000+200000
+ 43336 words of font info for 88 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
  27i,19n,24p,1485b,287s stack positions out of 5000i,500n,10000p,200000b,50000s
 {F:/Software/CTEX/MiKTeX/fonts/enc/dvips/fontname/8r.enc}<F:/Software/CTEX/Mi
@@ -354,16 +376,15 @@ ype1/public/amsfonts/cm/cmmi10.pfb><F:/Software/CTEX/MiKTeX/fonts/type1/public/
 amsfonts/cm/cmmi7.pfb><F:/Software/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/c
 mr10.pfb><F:/Software/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><F:/S
 oftware/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><F:/Software/CTEX/M
-iKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><F:/Software/CTEX/MiKTeX/fonts/ty
-pe1/public/amsfonts/cm/cmsy10.pfb><F:/Software/CTEX/MiKTeX/fonts/type1/public/a
-msfonts/cm/cmsy7.pfb><F:/Software/CTEX/MiKTeX/fonts/type1/public/amsfonts/symbo
-ls/msam10.pfb><F:/Software/CTEX/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><F:/Sof
-tware/CTEX/MiKTeX/fonts/type1/urw/times/utmbi8a.pfb><F:/Software/CTEX/MiKTeX/fo
-nts/type1/urw/times/utmr8a.pfb><F:/Software/CTEX/MiKTeX/fonts/type1/urw/times/u
-tmri8a.pfb>
-Output written on final_report_7.pdf (8 pages, 865504 bytes).
+iKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><F:/Software/CTEX/MiKTeX/fonts/
+type1/public/amsfonts/cm/cmsy7.pfb><F:/Software/CTEX/MiKTeX/fonts/type1/public/
+amsfonts/symbols/msam10.pfb><F:/Software/CTEX/MiKTeX/fonts/type1/urw/times/utmb
+8a.pfb><F:/Software/CTEX/MiKTeX/fonts/type1/urw/times/utmbi8a.pfb><F:/Software/
+CTEX/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><F:/Software/CTEX/MiKTeX/fonts/typ
+e1/urw/times/utmri8a.pfb>
+Output written on final_report_7.pdf (8 pages, 855150 bytes).
 PDF statistics:
- 92 PDF objects out of 1000 (max. 8388607)
+ 88 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  31 words of extra memory for PDF output out of 10000 (max. 10000000)
 
